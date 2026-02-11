@@ -1,0 +1,426 @@
+{
+    "AL": [
+        {
+            "name": "Birmingham Halal Grill",
+            "address": "Birmingham",
+            "phone": "+1 205 111 2222",
+            "rating": 4
+        }
+    ],
+    "AK": [
+        {
+            "name": "Anchorage Halal Cafe",
+            "address": "Anchorage",
+            "phone": "+1 907 111 2222",
+            "rating": 3
+        }
+    ],
+    "AZ": [
+        {
+            "name": "Phoenix Halal Food",
+            "address": "Phoenix",
+            "phone": "+1 602 111 2222",
+            "rating": 5
+        }
+    ],
+    "AR": [
+        {
+            "name": "Little Rock Halal",
+            "address": "Little Rock",
+            "phone": "+1 501 111 2222",
+            "rating": 4
+        }
+    ],
+    "CA": [
+        {
+            "name": "LA Halal Food",
+            "address": "Los Angeles",
+            "phone": "+1 310 111 2222",
+            "rating": 5
+        },
+        {
+            "name": "San Diego Halal Spot",
+            "address": "San Diego",
+            "phone": "+1 619 333 4444",
+            "rating": 4
+        }
+    ],
+    "CO": [
+        {
+            "name": "Denver Halal Grill",
+            "address": "Denver",
+            "phone": "+1 720 111 2222",
+            "rating": 4
+        }
+    ],
+    "CT": [
+        {
+            "name": "Hartford Halal",
+            "address": "Hartford",
+            "phone": "+1 860 111 2222",
+            "rating": 3
+        }
+    ],
+    "DE": [
+        {
+            "name": "Delaware Halal Cafe",
+            "address": "Dover",
+            "phone": "+1 302 111 2222",
+            "rating": 4
+        }
+    ],
+    "FL": [
+        {
+            "name": "Miami Halal Grill",
+            "address": "Miami",
+            "phone": "+1 305 111 2222",
+            "rating": 5
+        },
+        {
+            "name": "Orlando Halal Food",
+            "address": "Orlando",
+            "phone": "+1 407 333 4444",
+            "rating": 4
+        }
+    ],
+    "GA": [
+        {
+            "name": "Atlanta Halal House",
+            "address": "Atlanta",
+            "phone": "+1 404 111 2222",
+            "rating": 5
+        }
+    ],
+    "HI": [
+        {
+            "name": "Honolulu Halal",
+            "address": "Honolulu",
+            "phone": "+1 808 111 2222",
+            "rating": 4
+        }
+    ],
+    "ID": [
+        {
+            "name": "Boise Halal Grill",
+            "address": "Boise",
+            "phone": "+1 208 111 2222",
+            "rating": 3
+        }
+    ],
+    "IL": [
+        {
+            "name": "Chicago Halal House",
+            "address": "Chicago",
+            "phone": "+1 312 111 2222",
+            "rating": 5
+        }
+    ],
+    "IN": [
+        {
+            "name": "Indiana Halal Cafe",
+            "address": "Indianapolis",
+            "phone": "+1 317 111 2222",
+            "rating": 4
+        }
+    ],
+    "IA": [
+        {
+            "name": "Iowa Halal Grill",
+            "address": "Des Moines",
+            "phone": "+1 515 111 2222",
+            "rating": 3
+        }
+    ],
+    "KS": [
+        {
+            "name": "Kansas Halal Spot",
+            "address": "Wichita",
+            "phone": "+1 316 111 2222",
+            "rating": 4
+        }
+    ],
+    "KY": [
+        {
+            "name": "Kentucky Halal",
+            "address": "Louisville",
+            "phone": "+1 502 111 2222",
+            "rating": 4
+        }
+    ],
+    "LA": [
+        {
+            "name": "Louisiana Halal",
+            "address": "New Orleans",
+            "phone": "+1 504 111 2222",
+            "rating": 5
+        }
+    ],
+    "ME": [
+        {
+            "name": "Maine Halal Cafe",
+            "address": "Portland",
+            "phone": "+1 207 111 2222",
+            "rating": 3
+        }
+    ],
+    "MD": [
+        {
+            "name": "Maryland Halal Grill",
+            "address": "Baltimore",
+            "phone": "+1 410 111 2222",
+            "rating": 4
+        }
+    ],
+    "MA": [
+        {
+            "name": "Boston Halal Food",
+            "address": "Boston",
+            "phone": "+1 617 111 2222",
+            "rating": 5
+        }
+    ],
+    "MI": [
+        {
+            "name": "Detroit Halal House",
+            "address": "Detroit",
+            "phone": "+1 313 111 2222",
+            "rating": 4
+        }
+    ],
+    "MN": [
+        {
+            "name": "Minnesota Halal",
+            "address": "Minneapolis",
+            "phone": "+1 612 111 2222",
+            "rating": 4
+        }
+    ],
+    "MS": [
+        {
+            "name": "Mississippi Halal",
+            "address": "Jackson",
+            "phone": "+1 601 111 2222",
+            "rating": 3
+        }
+    ],
+    "MO": [
+        {
+            "name": "Missouri Halal Grill",
+            "address": "St Louis",
+            "phone": "+1 314 111 2222",
+            "rating": 4
+        }
+    ],
+    "MT": [
+        {
+            "name": "Montana Halal",
+            "address": "Billings",
+            "phone": "+1 406 111 2222",
+            "rating": 3
+        }
+    ],
+    "NE": [
+        {
+            "name": "Nebraska Halal",
+            "address": "Omaha",
+            "phone": "+1 402 111 2222",
+            "rating": 4
+        }
+    ],
+    "NV": [
+        {
+            "name": "Vegas Halal Grill",
+            "address": "Las Vegas",
+            "phone": "+1 702 111 2222",
+            "rating": 5
+        }
+    ],
+    "NH": [
+        {
+            "name": "New Hampshire Halal",
+            "address": "Concord",
+            "phone": "+1 603 111 2222",
+            "rating": 3
+        }
+    ],
+    "NJ": [
+        {
+            "name": "NJ Halal Spot",
+            "address": "New Jersey",
+            "phone": "+1 973 111 2222",
+            "rating": 4
+        }
+    ],
+    "NM": [
+        {
+            "name": "New Mexico Halal",
+            "address": "Santa Fe",
+            "phone": "+1 505 111 2222",
+            "rating": 4
+        }
+    ],
+    "NY": [
+        {
+            "name": "Halal Brothers NYC",
+            "address": "New York Manhattan",
+            "phone": "+1 212 111 2222",
+            "rating": 5
+        },
+        {
+            "name": "Brooklyn Halal Grill",
+            "address": "Brooklyn",
+            "phone": "+1 718 333 4444",
+            "rating": 4
+        }
+    ],
+    "NC": [
+        {
+            "name": "North Carolina Halal",
+            "address": "Charlotte",
+            "phone": "+1 704 111 2222",
+            "rating": 4
+        }
+    ],
+    "ND": [
+        {
+            "name": "North Dakota Halal",
+            "address": "Fargo",
+            "phone": "+1 701 111 2222",
+            "rating": 3
+        }
+    ],
+    "OH": [
+        {
+            "name": "Ohio Halal Grill",
+            "address": "Columbus",
+            "phone": "+1 614 111 2222",
+            "rating": 4
+        }
+    ],
+    "OK": [
+        {
+            "name": "Oklahoma Halal",
+            "address": "Oklahoma City",
+            "phone": "+1 405 111 2222",
+            "rating": 3
+        }
+    ],
+    "OR": [
+        {
+            "name": "Oregon Halal Food",
+            "address": "Portland",
+            "phone": "+1 503 111 2222",
+            "rating": 4
+        }
+    ],
+    "PA": [
+        {
+            "name": "Pennsylvania Halal",
+            "address": "Philadelphia",
+            "phone": "+1 215 111 2222",
+            "rating": 5
+        }
+    ],
+    "RI": [
+        {
+            "name": "Rhode Island Halal",
+            "address": "Providence",
+            "phone": "+1 401 111 2222",
+            "rating": 3
+        }
+    ],
+    "SC": [
+        {
+            "name": "South Carolina Halal",
+            "address": "Columbia",
+            "phone": "+1 803 111 2222",
+            "rating": 4
+        }
+    ],
+    "SD": [
+        {
+            "name": "South Dakota Halal",
+            "address": "Sioux Falls",
+            "phone": "+1 605 111 2222",
+            "rating": 3
+        }
+    ],
+    "TN": [
+        {
+            "name": "Tennessee Halal",
+            "address": "Nashville",
+            "phone": "+1 615 111 2222",
+            "rating": 4
+        }
+    ],
+    "TX": [
+        {
+            "name": "Texas Halal BBQ",
+            "address": "Houston",
+            "phone": "+1 713 111 2222",
+            "rating": 5
+        },
+        {
+            "name": "Dallas Halal Grill",
+            "address": "Dallas",
+            "phone": "+1 214 333 4444",
+            "rating": 4
+        }
+    ],
+    "UT": [
+        {
+            "name": "Utah Halal",
+            "address": "Salt Lake City",
+            "phone": "+1 801 111 2222",
+            "rating": 4
+        }
+    ],
+    "VT": [
+        {
+            "name": "Vermont Halal",
+            "address": "Burlington",
+            "phone": "+1 802 111 2222",
+            "rating": 3
+        }
+    ],
+    "VA": [
+        {
+            "name": "Virginia Halal",
+            "address": "Richmond",
+            "phone": "+1 804 111 2222",
+            "rating": 4
+        }
+    ],
+    "WA": [
+        {
+            "name": "Washington Halal",
+            "address": "Seattle",
+            "phone": "+1 206 111 2222",
+            "rating": 5
+        }
+    ],
+    "WV": [
+        {
+            "name": "West Virginia Halal",
+            "address": "Charleston",
+            "phone": "+1 304 111 2222",
+            "rating": 3
+        }
+    ],
+    "WI": [
+        {
+            "name": "Wisconsin Halal",
+            "address": "Milwaukee",
+            "phone": "+1 414 111 2222",
+            "rating": 4
+        }
+    ],
+    "WY": [
+        {
+            "name": "Wyoming Halal",
+            "address": "Cheyenne",
+            "phone": "+1 307 111 2222",
+            "rating": 3
+        }
+    ]
+}
