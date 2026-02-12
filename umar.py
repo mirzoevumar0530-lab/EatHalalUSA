@@ -1,139 +1,214 @@
-import json
 import asyncio
-import logging
-from aiogram import Bot, Dispatcher, types, Router, F
-from aiogram.enums import ParseMode
-from aiogram.client.default import DefaultBotProperties
+from aiogram import Bot, Dispatcher, F
 from aiogram.types import (
-    ReplyKeyboardMarkup, KeyboardButton,
-    InlineKeyboardMarkup, InlineKeyboardButton
+    Message, CallbackQuery,
+    ReplyKeyboardMarkup, KeyboardButton
 )
-from aiogram.filters import CommandStart
+from aiogram.filters import Command
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from api_token import BOT_TOKEN
 
-# Лог
-logging.basicConfig(level=logging.INFO)
-
-bot = Bot(
-    token=BOT_TOKEN,
-    default=DefaultBotProperties(parse_mode=ParseMode.HTML)
-)
-
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
-router = Router()
 
-# --------- Загрузка JSON ----------
-def load_data():
-    try:
-        with open("restaurants.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {}
+# ====== DATA ======
 
-def save_data(data):
-    with open("restaurants.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+RESTAURANTS = {
+    "NY": [
+        {
+            "name": "Halal Food NYC",
+            "menu": "🍔 Burger\n🥙 Shawarma\n🍕 Pizza",
+            "lat": 40.7128,
+            "lon": -74.0060
+        }
+    ],
+    "CA": [
+        {
+            "name": "Halal LA",
+            "menu": "🍗 Chicken\n🥗 Salad\n🍔 Burger",
+            "lat": 34.0522,
+            "lon": -118.2437
+        }
+    ]
+}
 
-# --------- Клавиатура штатов ----------
-def states_keyboard(data):
-    buttons = [KeyboardButton(text=state) for state in data.keys()]
-    return ReplyKeyboardMarkup(
-        keyboard=[buttons[i:i+3] for i in range(0, len(buttons), 3)],
+ratings = {}  # {"NY_0": [5,4,3]}
+
+# ====== START ======
+
+@dp.message(Command("start"))
+async def start(message: Message):
+    states_keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="NY")],
+            [KeyboardButton(text="CA")]
+        ],
         resize_keyboard=True
     )
 
-# --------- START ----------
-@router.message(CommandStart())
-async def start(message: types.Message):
-    data = load_data()
     await message.answer(
-        "🇺🇸 <b>Welcome to USA Halal Guide</b>\n\nВыберите штат:",
-        reply_markup=states_keyboard(data)
+        "Салом! Штатро интихоб кунед:",
+        reply_markup=states_keyboard
     )
 
-# --------- Выбор штата ----------
-@router.message()
-async def show_restaurants(message: types.Message):
-    data = load_data()
-    state = message.text.upper()
+# ====== STATE SELECT ======
 
-    if state not in data:
-        await message.answer("❌ Такого штата нет.")
-        return
+@dp.message(F.text.in_(RESTAURANTS.keys()))
+async def choose_state(message: Message):
+    state = message.text
 
-    restaurants = data[state]
-
-    if not restaurants:
-        await message.answer("❌ В этом штате пока нет ресторанов.")
-        return
-
-    for r in restaurants:
-        rating = r.get("rating", 0)
-        stars = "⭐" * int(rating)
-
-        keyboard = InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    InlineKeyboardButton(
-                        text="⭐ Оценить",
-                        callback_data=f"rate_{state}_{r['name']}"
-                    )
-                ]
-            ]
+    kb = InlineKeyboardBuilder()
+    for idx, rest in enumerate(RESTAURANTS[state]):
+        kb.button(
+            text=rest["name"],
+            callback_data=f"rest:{state}:{idx}"
         )
 
-        text = (
-            f"🍽 <b>{r['name']}</b>\n"
-            f"📍 {r['address']}\n"
-            f"📞 {r['phone']}\n"
-            f"{stars}\n"
-        )
+    kb.adjust(1)
 
-        await message.answer(text, reply_markup=keyboard)
-
-# --------- Кнопка оценить ----------
-@router.callback_query(F.data.startswith("rate_"))
-async def rate_restaurant(callback: types.CallbackQuery):
-    _, state, name = callback.data.split("_", 2)
-
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text="⭐1", callback_data=f"setrate_{state}_{name}_1"),
-                InlineKeyboardButton(text="⭐2", callback_data=f"setrate_{state}_{name}_2"),
-                InlineKeyboardButton(text="⭐3", callback_data=f"setrate_{state}_{name}_3"),
-                InlineKeyboardButton(text="⭐4", callback_data=f"setrate_{state}_{name}_4"),
-                InlineKeyboardButton(text="⭐5", callback_data=f"setrate_{state}_{name}_5"),
-            ]
-        ]
+    await message.answer(
+        "Ресторанро интихоб кунед:",
+        reply_markup=kb.as_markup()
     )
 
-    await callback.message.answer("Выберите рейтинг:", reply_markup=keyboard)
+# ====== RESTAURANT VIEW ======
+
+@dp.callback_query(F.data.startswith("rest:"))
+async def show_restaurant(callback: CallbackQuery):
+    _, state, idx = callback.data.split(":")
+    idx = int(idx)
+
+    restaurant = RESTAURANTS[state][idx]
+    rest_id = f"{state}_{idx}"
+
+    avg_rating = 0
+    if rest_id in ratings and ratings[rest_id]:
+        avg_rating = sum(ratings[rest_id]) / len(ratings[rest_id])
+
+    text = (
+        f"🍽 {restaurant['name']}\n"
+        f"⭐ Рейтинг: {avg_rating:.1f}"
+    )
+
+    kb = InlineKeyboardBuilder()
+    kb.button(text="📋 Меню", callback_data=f"menu:{state}:{idx}")
+    kb.button(text="📍 Геолокация", callback_data=f"loc:{state}:{idx}")
+    kb.button(text="🛒 Фармоиш", callback_data=f"order:{state}:{idx}")
+    kb.button(text="⭐ Рейтинг диҳед", callback_data=f"rating:{state}:{idx}")
+    kb.adjust(1)
+
+    await callback.message.answer(text, reply_markup=kb.as_markup())
     await callback.answer()
 
-# --------- Установка рейтинга ----------
-@router.callback_query(F.data.startswith("setrate_"))
-async def set_rating(callback: types.CallbackQuery):
-    _, state, name, rating = callback.data.split("_", 3)
-    rating = int(rating)
+# ====== MENU ======
 
-    data = load_data()
+@dp.callback_query(F.data.startswith("menu:"))
+async def show_menu(callback: CallbackQuery):
+    _, state, idx = callback.data.split(":")
+    idx = int(idx)
 
-    for r in data[state]:
-        if r["name"] == name:
-            r["rating"] = rating
+    menu_text = RESTAURANTS[state][idx]["menu"]
 
-    save_data(data)
-
-    await callback.message.answer("✅ Рейтинг сохранен!")
+    await callback.message.answer(f"📋 Меню:\n\n{menu_text}")
     await callback.answer()
 
-# --------- Запуск ----------
-dp.include_router(router)
+# ====== LOCATION ======
+
+@dp.callback_query(F.data.startswith("loc:"))
+async def send_location(callback: CallbackQuery):
+    _, state, idx = callback.data.split(":")
+    idx = int(idx)
+
+    restaurant = RESTAURANTS[state][idx]
+
+    await bot.send_location(
+        chat_id=callback.message.chat.id,
+        latitude=restaurant["lat"],
+        longitude=restaurant["lon"]
+    )
+
+    await callback.answer()
+
+# ====== ORDER ======
+@dp.callback_query(F.data.startswith("order:"))
+async def order_menu(callback: CallbackQuery):
+    _, state, idx = callback.data.split(":")
+    idx = int(idx)
+
+    restaurant = RESTAURANTS[state][idx]
+    items = restaurant["menu"].split("\n")
+
+    kb = InlineKeyboardBuilder()
+
+    for item in items:
+        kb.button(
+            text=item,
+            callback_data=f"buy:{state}:{idx}:{item}"
+        )
+
+    kb.adjust(1)
+
+    await callback.message.answer(
+        "Таомро интихоб кунед:",
+        reply_markup=kb.as_markup()
+    )
+    await callback.answer()
+
+@dp.callback_query(F.data.startswith("buy:"))
+async def confirm_order(callback: CallbackQuery):
+    _, state, idx, item = callback.data.split(":", 3)
+
+    await callback.message.answer(
+        f"🛒 {item}\n\n"
+        "✅ Фармоиши шумо қабул шуд!\n"
+        "📞 Мо ба зудӣ бо шумо тамос мегирем."
+    )
+    await callback.answer()
+
+# ====== RATING MENU ======
+
+@dp.callback_query(F.data.startswith("rating:"))
+async def rating_menu(callback: CallbackQuery):
+    _, state, idx = callback.data.split(":")
+    rest_id = f"{state}_{idx}"
+
+    kb = InlineKeyboardBuilder()
+    for i in range(1, 6):
+        kb.button(
+            text=f"{i}⭐",
+            callback_data=f"rate:{rest_id}:{i}"
+        )
+    kb.adjust(5)
+
+    await callback.message.answer(
+        "Баҳо диҳед (1-5 ⭐):",
+        reply_markup=kb.as_markup()
+    )
+    await callback.answer()
+
+# ====== SAVE RATING ======
+
+@dp.callback_query(F.data.startswith("rate:"))
+async def save_rating(callback: CallbackQuery):
+    _, rest_id, value = callback.data.split(":")
+    value = int(value)
+
+    if rest_id not in ratings:
+        ratings[rest_id] = []
+
+    ratings[rest_id].append(value)
+
+    avg = sum(ratings[rest_id]) / len(ratings[rest_id])
+
+    await callback.message.answer(
+        f"✅ Ташаккур!\n⭐ Рейтинги нав: {avg:.1f}"
+    )
+    await callback.answer()
+
+# ====== RUN ======
 
 async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    print("Bot started...")
     asyncio.run(main())
