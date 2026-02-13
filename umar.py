@@ -153,7 +153,6 @@ async def order_menu(callback: CallbackQuery):
         reply_markup=kb.as_markup()
     )
     await callback.answer()
-
 @dp.callback_query(F.data.startswith("buy:"))
 async def confirm_order(callback: CallbackQuery):
     _, state, idx, item = callback.data.split(":", 3)
@@ -164,7 +163,6 @@ async def confirm_order(callback: CallbackQuery):
         "📞 Мо ба зудӣ бо шумо тамос мегирем."
     )
     await callback.answer()
-
 # ====== RATING MENU ======
 
 @dp.callback_query(F.data.startswith("rating:"))
